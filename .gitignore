@@ -6,3 +6,6 @@ venv/
 
 # Ignore Python cache directories
 __pycache__/
+
+# Ignore OS junk files
+.DS_Store
