@@ -62,41 +62,41 @@ AWS Secrets Manager (Twilio Credentials)
 
 ## Project Structure
 
-cash_converter_alert/
-│
-├── alert.py                # Main Lambda handler
-├── requirements.txt        # Dependencies
-└── state.json (local)      # Only for manual resets; not used by Lambda
+    cash_converter_alert/
+    │
+    ├── alert.py                # Main Lambda handler
+    ├── requirements.txt        # Dependencies
+    └── state.json (local)      # Only for manual resets; not used by Lambda
 
 ---
 
 ## Secrets Management
 
-{
-  "TWILIO_ACCOUNT_SID": "ACXXXXXXXXXXXXXXXXXXXXX",
-  "TWILIO_AUTH_TOKEN": "your_auth_token_here"
-}
+        {
+        "TWILIO_ACCOUNT_SID": "ACXXXXXXXXXXXXXXXXXXXXX",
+        "TWILIO_AUTH_TOKEN": "your_auth_token_here"
+        }
 
 Lambda loads them dynamically at runtime using:
 
-import boto3
-import json
-import os
+        import boto3
+        import json
+        import os
 
-def get_twilio_credentials():
-    secrets_client = boto3.client("secretsmanager")
-    secret_name = os.environ["TWILIO_SECRET_NAME"]
-    response = secrets_client.get_secret_value(SecretId=secret_name)
-    secrets = json.loads(response["SecretString"])
-    return secrets["TWILIO_ACCOUNT_SID"], secrets["TWILIO_AUTH_TOKEN"]
+        def get_twilio_credentials():
+            secrets_client = boto3.client("secretsmanager")
+            secret_name = os.environ["TWILIO_SECRET_NAME"]
+            response = secrets_client.get_secret_value(SecretId=secret_name)
+            secrets = json.loads(response["SecretString"])
+            return secrets["TWILIO_ACCOUNT_SID"], secrets["TWILIO_AUTH_TOKEN"]
 
 ---
 
 ## S3 State File
 
-{
-  "last_alert_date": "2025-02-10"
-}
+        {
+        "last_alert_date": "2025-02-10"
+        }
 
 This ensures only one alert per day, even if the exchange rate continues rising.
 
