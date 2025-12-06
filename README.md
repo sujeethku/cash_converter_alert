@@ -20,21 +20,27 @@ This project is built using AWS Lambda, EventBridge Scheduler, AWS Secrets Manag
 
 ## System Architecture
 
-EventBridge (rate: 1 hour)
-            |
-            v
-AWS Lambda (Python)
-    - Fetch exchange rate
-    - Load state from S3
-    - Compare against threshold
-    - Send WhatsApp alert via Twilio
-    - Update state.json in S3
-            |
-            v
-      S3 Bucket (state.json)
-            |
-            v
-AWS Secrets Manager (Twilio Credentials)
+## 🏗️ System Architecture
+
+```mermaid
+flowchart TD
+    EB[EventBridge<br>(Hourly Trigger)] --> L[Lambda Function<br>Python Code Execution]
+    
+    L -->|Load/Save State| S3[S3 Bucket<br>state.json]
+    L -->|Fetch Secrets| SM[Secrets Manager<br>Twilio Credentials]
+    L -->|Send Alert| TW[Twilio WhatsApp API<br>Sandbox Endpoint]
+    
+    subgraph Cloud[AWS Cloud]
+        EB
+        L
+        S3
+        SM
+    end
+
+    subgraph External[External Service]
+        TW
+    end
+
 
 ---
 
