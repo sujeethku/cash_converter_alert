@@ -22,25 +22,31 @@ This project is built using AWS Lambda, EventBridge Scheduler, AWS Secrets Manag
 
 ## 🏗️ System Architecture
 
+## 🏗️ System Architecture
+
 ```mermaid
 flowchart TD
-    EB[EventBridge<br>(Hourly Trigger)] --> L[Lambda Function<br>Python Code Execution]
+    EB["EventBridge
+(Hourly Trigger)"] --> L["Lambda Function
+(Python Code Execution)"]
     
-    L -->|Load/Save State| S3[S3 Bucket<br>state.json]
-    L -->|Fetch Secrets| SM[Secrets Manager<br>Twilio Credentials]
-    L -->|Send Alert| TW[Twilio WhatsApp API<br>Sandbox Endpoint]
+    L -->|Load / Save State| S3["S3 Bucket
+(state.json)"]
+    L -->|Fetch Secrets| SM["Secrets Manager
+(Twilio Credentials)"]
+    L -->|Send Alert| TW["Twilio WhatsApp API
+(Sandbox Endpoint)"]
     
-    subgraph Cloud[AWS Cloud]
+    subgraph AWS_Cloud ["AWS Cloud"]
         EB
         L
         S3
         SM
     end
 
-    subgraph External[External Service]
+    subgraph External ["External Service"]
         TW
     end
-
 
 ---
 
