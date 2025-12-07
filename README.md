@@ -157,5 +157,4 @@ Use the "Test" feature in AWS Lambda Console:
 
 ### 👨‍💻 Author
 
-Sujeeth Kumar Tuniki
-Product Manager | Automation Enthusiast
+Sujeeth Kumar Tuniki | Product Manager | Automation Enthusiast
